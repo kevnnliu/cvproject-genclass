@@ -1,10 +1,27 @@
-import pathlib
 import numpy as np
 import cv2
-import pandas
-import matplotlib as plt
 import os
 import random
+
+def load_data(dataset='train'):
+    print('Loading ' + dataset + ' data\n')
+    image_folder = 'data/tiny-imagenet-200/'
+    X = None
+    y = None
+    if dataset == 'train':
+        X = np.load(image_folder + 'X_train.npy')
+        y = np.load(image_folder + 'y_train.npy')
+    elif dataset == 'val':
+        X = np.load(image_folder + 'X_val.npy')
+        y = np.load(image_folder + 'y_val.npy')
+    elif dataset == 'test':
+        X = np.load(image_folder + 'X_test.npy')
+    else:
+        raise ValueError("Dataset must be either 'train', 'val' or 'test'\n")
+    
+    print('Finished loading data\n')
+
+    return X, y
 
 def prepare_data():
     print('Preparing data\n')
@@ -112,23 +129,3 @@ def prepare_data():
     print('Done\n')
 
     print('Finished preparing data\n')
-
-def load_data(dataset='train'):
-    print('Loading data\n')
-    image_folder = 'data/tiny-imagenet-200/'
-    X = None
-    y = None
-    if dataset == 'train':
-        X = np.load(image_folder + 'X_train.npy')
-        y = np.load(image_folder + 'y_train.npy')
-    elif dataset == 'val':
-        X = np.load(image_folder + 'X_val.npy')
-        y = np.load(image_folder + 'y_val.npy')
-    elif dataset == 'test':
-        X = np.load(image_folder + 'X_test.npy')
-    else:
-        raise ValueError("Dataset must be either 'train', 'val' or 'test'\n")
-    
-    print('Finished loading data\n')
-
-    return X, y
