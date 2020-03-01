@@ -8,4 +8,4 @@ Run ```get_data.sh```. This will download the Tiny ImageNet dataset to your loca
 
 ## Training:
 
-To design a new model, create a new function in ```models.py``` that returns a Keras model. To train a model, simply open a terminal from the project's root directory and run ```python -i train.py``` and call ```train()```, passing in arguments as appropriate. It is recommended to create a Jupyter Notebook environment to train and run visualizations.
+To design a new model, create a new function in ```models.py``` that returns a Keras model. To train a model, simply open a terminal from the project's root directory and run ```python -i train.py``` and call ```train()```, passing in arguments as appropriate. It is recommended to create a Jupyter Notebook environment to train models and run visualizations.
