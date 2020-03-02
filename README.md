@@ -4,8 +4,8 @@ UC Berkeley, Spring 2020. The goal is to design and train a classifier on top of
 
 ## First time setup:
 
-Run ```get_data.sh```. This will download the Tiny ImageNet dataset to your local machine. From the project's root directory, open a terminal and run ```pip install -r requirements.txt```. You may need to add a ```--user``` option. Then run ```python -i tools.py``` and call ```prepare_data()```. This will process the images into a format which can be fed into Keras models.
+Run ```get_data.sh```. This will download the Tiny ImageNet dataset to your local machine. If needed, run ```pip install -r requirements.txt``` to install the required modules. You may need to add a ```--user``` option. Then run ```python -i tools.py``` and call ```prepare_data()```. This will process the images into a format which can be fed into Keras models.
 
 ## Training:
 
-To design a new model, create a new function in ```models.py``` that returns a Keras model. To train a model, simply open a terminal from the project's root directory and run ```python -i train.py``` and call ```train()```, passing in arguments as appropriate. It is recommended to create a Jupyter Notebook environment to train models and run visualizations.
+To design a new model, create a new function in ```models.py``` that returns a Keras model. To train a model, simply run ```python -i train.py``` and call ```train()```, passing in arguments as appropriate. It is recommended to create a Jupyter Notebook environment to train models and run visualizations.
