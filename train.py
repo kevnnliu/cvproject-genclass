@@ -13,7 +13,6 @@ import matplotlib.pyplot as plt
 tf.test.is_built_with_cuda()
 tf.config.list_physical_devices('GPU')
 
-
 def train(delete_old=False, num_epochs=20, model_name='AlphaNet', optim='adam', batch_size=32):
     model_path = 'models/' + model_name + '.h5'
 
