@@ -4,7 +4,7 @@ UC Berkeley, Spring 2020. The goal is to design and train a classifier on top of
 
 ## First time setup:
 
-Run ```get_data.sh```. This will download the Tiny ImageNet dataset to your local machine. If needed, run ```pip install -r requirements.txt``` to install the required modules. You may need to add a ```--user``` option. Then run ```python -i tools.py``` and call ```prepare_data()```. This will process the images into a format which can be fed into Keras models.
+Run ```get_data.sh```. This will download the Tiny ImageNet dataset to your local machine. If needed, run ```pip install -r requirements.txt``` to install the required modules. You may need to add a ```--user``` option. Then run ```python process_data.py```. This will process the images into a format which can be fed into Keras models.
 
 ## Training:
 
