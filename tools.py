@@ -23,12 +23,6 @@ def load_data(dataset='train'):
 
     return X, y
 
-def normalize_image(image):
-    ROWS = 64
-    COLUMNS = 64
-    cv_image = cv2.resize(cv2.imread(image, cv2.IMREAD_COLOR), (ROWS, COLUMNS), interpolation=cv2.INTER_CUBIC)
-    return cv_image / 255.
-
 def prepare_data():
     print('Preparing data\n')
     image_folder = 'data/tiny-imagenet-200/'
@@ -80,10 +74,10 @@ def prepare_data():
 
     print('Formatting training images\n')
     for image in train_images:
-        X_train.append(normalize_image(image))
+        cv_image = cv2.imread(image, cv2.IMREAD_COLOR)
+        X_train.append(cv_image)
         label = image[29 : 38]
-        encoding = np.zeros(200)
-        encoding[class_labels[label]] = 1
+        encoding = class_labels[label]
         y_train.append(encoding)
     print('Done\n')
 
@@ -97,17 +91,18 @@ def prepare_data():
 
     print('Formatting validation images\n')
     for image in val_images:
-        X_val.append(normalize_image(image))
+        cv_image = cv2.imread(image, cv2.IMREAD_COLOR)
+        X_val.append(cv_image)
         actual_image = image[34 :]
         label = val_labels[actual_image]
-        encoding = np.zeros(200)
-        encoding[class_labels[label]] = 1
+        encoding = class_labels[label]
         y_val.append(encoding)
     print('Done\n')
 
     print('Formatting test images\n')
     for image in test_images:
-        X_test.append(normalize_image(image))
+        cv_image = cv2.imread(image, cv2.IMREAD_COLOR)
+        X_test.append(cv_image)
     print('Done\n')
 
     print('Converting to numpy arrays\n')
