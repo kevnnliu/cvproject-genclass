@@ -126,5 +126,3 @@ dmypy.json
 # Dataset
 data/tiny-imagenet-200/
 *.zip
-
-*.h5
