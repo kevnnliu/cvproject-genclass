@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 tf.test.is_built_with_cuda()
 tf.config.list_physical_devices('GPU')
 
-def train(restore=False, epochs=40, model=None, optim='adam', batch_size=16, datagen=None, data=None, cb_list=None):
-    model_path = 'models/' + model.name + '.h5'
+def train(restore=False, epochs=40, model=None, optim='adam', batch_size=32, datagen=None, data=None, cb_list=None):
+    model_path = 'models/' + model.name + '/' + model.name + '.h5'
 
     X_train, y_train = data['train']
     X_val, y_val = data['val']

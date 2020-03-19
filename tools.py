@@ -3,6 +3,32 @@ import cv2
 import os
 import random
 
+def get_word_labels():
+    image_folder = 'data/tiny-imagenet-200/'
+    class_words = {}
+    print('Loading words\n')
+    with open(image_folder + 'words.txt', 'r') as labels_file:
+        for line in labels_file:
+            label = line.strip().split()
+            class_words[label[0]] = label[1 :]
+    print('Done\n')
+
+    return class_words
+
+def get_label_dict():
+    image_folder = 'data/tiny-imagenet-200/'
+    class_labels = {}
+    index = 0
+    print('Loading labels\n')
+    with open(image_folder + 'wnids.txt', 'r') as labels_file:
+        for line in labels_file:
+            label = line.strip()
+            class_labels[index] = label
+            index += 1
+    print('Done\n')
+
+    return class_labels
+
 def load_data(dataset='train'):
     print('Loading ' + dataset + ' data\n')
     image_folder = 'data/tiny-imagenet-200/'
@@ -60,7 +86,7 @@ def prepare_data():
     random.seed(91387264)
     random.shuffle(train_images)
     random.shuffle(val_images)
-    random.shuffle(test_images)
+    # Don't shuffle test images
     print('Done\n')
 
     X_train = []
