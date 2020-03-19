@@ -8,4 +8,4 @@ Run ```get_data.sh```. This will download the Tiny ImageNet dataset to your loca
 
 ## Training:
 
-To design a new model, create a new function in ```models.py``` that returns a Keras model. To train a model, simply call ```train()```, passing in arguments as appropriate. It is recommended to create a Jupyter Notebook environment to train models and run visualizations.
+To design a new model, create a new function in ```models.py``` that returns a Keras model. To train a model, simply call ```train()``` from ```train.py```, passing in arguments as appropriate. Note that you can pass in either a default Keras optimizer name or a Keras optimizer instance to the ```optim``` argument. It is recommended to use Jupyter Notebook to train models and run visualizations.
