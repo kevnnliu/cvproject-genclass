@@ -8,11 +8,7 @@ from keras.applications import vgg16, resnet_v2
 # BravoNet:
 # Transfer learning using VGG16 as base model.
 def BravoNet():
-    base_model = vgg16.VGG16(weights='imagenet', include_top=False, input_shape=(64, 64, 3))
-
-    for layer in base_model.layers:
-        print(layer)
-        layer.trainable = False 
+    base_model = vgg16.VGG16(weights=None, include_top=False, input_shape=(64, 64, 3))
 
     model = Sequential()
     model.add(base_model)
@@ -30,17 +26,13 @@ def BravoNet():
     model.add(LeakyReLU(alpha=0.1))
     model.add(Dropout(0.5))
 
-    model.add(Dense(2048, kernel_initializer='glorot_normal'))
-    model.add(BatchNormalization())
-    model.add(LeakyReLU(alpha=0.1))
-    model.add(Dropout(0.5))
-
     model.add(Dense(200, activation='softmax'))
 
     return model
 
 # AlphaNet:
 # Naive approach using basic convolutional blocks.
+# Achieved 39.4% validation accuracy after 232 epochs.
 def AlphaNet():
     model = Sequential()
     model.name = 'AlphaNet'
