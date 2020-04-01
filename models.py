@@ -6,10 +6,10 @@ from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, LeakyReLU, Spatia
 from keras.applications import resnet_v2
 
 # BravoNet:
-# Residual network using the ResNet50 v2 architecture with a dropout layer at the end.
-# Training time: XX epochs, ~XX hours, ~XXs/epoch, ~XXms/step
+# Residual network using the ResNet50 v2 architecture with dropout applied at the end.
+# Training time: XX epochs, ~XX hours
 # Trainable parameters: 23,929,160
-# Best: XX% validation accuracy
+# Best: ~XX% validation accuracy
 def BravoNet():
     model = Sequential()
     model.name = "BravoNet"
@@ -24,9 +24,9 @@ def BravoNet():
 
 # AlphaNet:
 # Simple convolutional network with batch normalization, dropout, and max pooling.
-# Training time: XX epochs, ~XX hours, ~150s/epoch, ~50ms/step
+# Training time: XX epochs, ~XX hours
 # Trainable parameters: 23,000,776
-# Best: XX% validation accuracy
+# Best: ~XX% validation accuracy
 def AlphaNet():
     model = Sequential()
     model.name = "AlphaNet"
