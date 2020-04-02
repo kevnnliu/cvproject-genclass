@@ -1,13 +1,22 @@
 import tensorflow as tf
 from keras.models import load_model
 import models
+import numpy as np
+import keras.metrics
 
 from os import path, remove
 import matplotlib.pyplot as plt
+import functools
 
 # Use these to test check for gpu availability
 tf.test.is_built_with_cuda()
 tf.config.list_physical_devices("GPU")
+
+# Top-k metrics
+top3_acc = functools.partial(keras.metrics.top_k_categorical_accuracy, k=3)
+top3_acc.__name__ = "top3_accuracy"
+top5_acc = functools.partial(keras.metrics.top_k_categorical_accuracy, k=5)
+top5_acc.__name__ = "top5_accuracy"
 
 def train(model_path, restore, epochs, model, optim, datagen, data, cb_list, batch_size=32):
     X_train, y_train = data["train"]
@@ -20,7 +29,8 @@ def train(model_path, restore, epochs, model, optim, datagen, data, cb_list, bat
             remove(model_path)
 
     model.summary()
-    model.compile(optim, loss="categorical_crossentropy", metrics=["accuracy"])
+
+    model.compile(optim, loss="categorical_crossentropy", metrics=["accuracy", top3_acc, top5_acc])
 
     history = model.fit_generator(datagen.flow(X_train, y_train, batch_size=batch_size), 
                                     steps_per_epoch=len(X_train) / batch_size, 
@@ -33,25 +43,30 @@ def train(model_path, restore, epochs, model, optim, datagen, data, cb_list, bat
     return history
 
 def show_history(history):
-    # Plot training & validation accuracy values
-    plt.plot(history.history["accuracy"])
-    plt.plot(history.history["val_accuracy"])
-    plt.title("Model Accuracy")
-    plt.ylabel("Accuracy")
-    plt.xlabel("Epoch")
-    plt.legend(["Train", "Val"], loc="upper left")
-    plt.show()
+    history = history.history
 
     # Plot training & validation loss values
-    plt.plot(history.history["loss"])
-    plt.plot(history.history["val_loss"])
-    plt.title("Model Loss")
-    plt.ylabel("Loss")
+    plot_history(history["loss"], history["val_loss"], "Categorical Cross-Entropy Loss")
+
+    # Plot training & validation accuracy values
+    plot_history(history["accuracy"], history["val_accuracy"], "Top-1 Accuracy")
+
+    # Plot training & validation top-3 accuracy values
+    plot_history(history["top3_accuracy"], history["val_top3_accuracy"], "Top-3 Accuracy")
+
+    # Plot training & validation top-5 accuracy values
+    plot_history(history["top5_accuracy"], history["val_top5_accuracy"], "Top-5 Accuracy")
+
+def plot_history(train, val, metric):
+    plt.plot(train)
+    plt.plot(val)
+    plt.title(metric)
+    plt.ylabel(metric)
     plt.xlabel("Epoch")
     plt.legend(["Train", "Val"], loc="upper left")
     plt.show()
 
 def shuffle_channels(img):
-    img_transposed = tf.transpose(img, [2, 0, 1])
-    shuffled = tf.random.shuffle(img_transposed)
-    return tf.transpose(shuffled, [1, 2, 0])
+    img = np.moveaxis(img, -1, 0)
+    np.random.shuffle(img)
+    return np.moveaxis(img, 0, -1)
