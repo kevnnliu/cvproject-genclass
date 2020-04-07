@@ -5,21 +5,17 @@ from keras.models import Model, Sequential
 from keras.layers import Dense, Conv2D, MaxPooling2D, Flatten, LeakyReLU, SpatialDropout2D, Dropout, BatchNormalization, GaussianNoise
 from keras.applications import resnet_v2
 
-import math
-gsd = 1 / math.sqrt(2 * math.pi)
-
 # BravoNet:
 # Residual network using the ResNet152 v2 architecture.
-# Training time: XX epochs, ~XX hours
-# Trainable parameters: 58,597,704
-# Best: ~XX% validation accuracy
 def BravoNet():
     model = Sequential()
     model.name = "BravoNet"
-    model.add(GaussianNoise(gsd, input_shape=(64, 64, 3)))
 
-    base_model = resnet_v2.ResNet152V2(weights=None, include_top=False, pooling="avg")
+    base_model = resnet_v2.ResNet50V2(weights='imagenet', include_top=False, pooling="avg", input_shape=(64, 64, 3))
     model.add(base_model)
+
+    for layer in base_model.layers[-35 :]:
+        layer.trainable = False
 
     model.add(Dense(200, activation="softmax"))
 
@@ -27,15 +23,11 @@ def BravoNet():
 
 # AlphaNet:
 # Simple convolutional network with minor improvements.
-# Training time: XX epochs, ~XX hours
-# Trainable parameters: 23,000,776
-# Best: ~XX% validation accuracy
 def AlphaNet():
     model = Sequential()
     model.name = "AlphaNet"
-    model.add(GaussianNoise(gsd, input_shape=(64, 64, 3)))
 
-    model.add(Conv2D(32, kernel_size=7, padding="same", kernel_initializer="glorot_normal"))
+    model.add(Conv2D(32, kernel_size=7, padding="same", kernel_initializer="glorot_normal", input_shape=(64, 64, 3)))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.1))
     model.add(MaxPooling2D())
