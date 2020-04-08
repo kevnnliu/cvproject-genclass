@@ -3,8 +3,10 @@ import cv2
 import os
 import random
 
-def get_word_labels():
-    image_folder = "data/tiny-imagenet-200/"
+DEFAULT_IMAGE_FOLDER = "data/tiny-imagenet-200/"
+
+def get_word_labels(img_folder=DEFAULT_IMAGE_FOLDER):
+    image_folder = img_folder
     class_words = {}
     print("Loading words\n")
     with open(image_folder + "words.txt", "r") as labels_file:
@@ -15,8 +17,8 @@ def get_word_labels():
 
     return class_words
 
-def get_label_dict():
-    image_folder = "data/tiny-imagenet-200/"
+def get_label_dict(img_folder=DEFAULT_IMAGE_FOLDER):
+    image_folder = img_folder
     class_labels = {}
     index = 0
     print("Loading labels\n")
@@ -29,9 +31,9 @@ def get_label_dict():
 
     return class_labels
 
-def load_data(dataset="train"):
+def load_data(dataset="train", img_folder=DEFAULT_IMAGE_FOLDER):
     print("Loading " + dataset + " data\n")
-    image_folder = "data/tiny-imagenet-200/"
+    image_folder = img_folder
     X = None
     y = None
     if dataset == "train":
@@ -49,9 +51,9 @@ def load_data(dataset="train"):
 
     return X, y
 
-def prepare_data():
+def prepare_data(img_folder=DEFAULT_IMAGE_FOLDER):
     print("Preparing data\n")
-    image_folder = "data/tiny-imagenet-200/"
+    image_folder = img_folder
     class_labels = {}
     index = 0
     print("Loading labels\n")
