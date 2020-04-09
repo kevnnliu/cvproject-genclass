@@ -28,8 +28,6 @@ def train(model_path, restore, epochs, model, optim, datagen, data, cb_list, bat
         else:
             remove(model_path)
 
-    model.summary()
-
     model.compile(optim, loss="categorical_crossentropy", metrics=["accuracy", top3_acc, top5_acc])
 
     history = model.fit_generator(datagen.flow(X_train, y_train, batch_size=batch_size), 
@@ -48,7 +46,7 @@ def show_history(history):
     # Plot training & validation loss values
     plot_history(history["loss"], history["val_loss"], "Categorical Cross-Entropy Loss")
 
-    # Plot training & validation accuracy values
+    # Plot training & validation top-1 accuracy values
     plot_history(history["accuracy"], history["val_accuracy"], "Top-1 Accuracy")
 
     # Plot training & validation top-3 accuracy values
