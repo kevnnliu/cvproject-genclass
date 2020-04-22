@@ -7,7 +7,7 @@ from keras.applications import resnet_v2
 
 # BravoNet:
 # Residual network using the ResNet50 v2 architecture.
-def BravoNet(version):
+def BravoNet(version=""):
     model = Sequential()
     model.name = "BravoNet" + version
 
@@ -22,7 +22,7 @@ def BravoNet(version):
 
 # AlphaNet:
 # Simple convolutional network with minor improvements.
-def AlphaNet(version):
+def AlphaNet(version=""):
     model = Sequential()
     model.name = "AlphaNet" + version
 
