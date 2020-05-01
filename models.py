@@ -7,11 +7,12 @@ from keras.applications import resnet_v2
 
 # BravoNet:
 # Residual network using the ResNet50 v2 architecture.
-def BravoNet(version):
+def BravoNet(version=""):
     model = Sequential()
-    model.name = "BravoNet" + version
+    suffix = "" if version = "" else "_" + version
+    model.name = "BravoNet" + suffix
 
-    base_model = resnet_v2.ResNet50V2(weights='imagenet', include_top=False, pooling="avg", input_shape=(64, 64, 3))
+    base_model = resnet_v2.ResNet50V2(weights=None, include_top=False, pooling="avg", input_shape=(64, 64, 3))
     model.add(base_model)
 
     model.add(Dense(200, activation="softmax"))
@@ -22,9 +23,10 @@ def BravoNet(version):
 
 # AlphaNet:
 # Simple convolutional network with minor improvements.
-def AlphaNet(version):
+def AlphaNet(version=""):
     model = Sequential()
-    model.name = "AlphaNet" + version
+    suffix = "" if version = "" else "_" + version
+    model.name = "AlphaNet" + suffix
 
     model.add(Conv2D(32, kernel_size=7, padding="same", kernel_initializer="glorot_normal", input_shape=(64, 64, 3)))
     model.add(BatchNormalization())
@@ -58,12 +60,12 @@ def AlphaNet(version):
     model.add(Dense(2048, kernel_initializer="glorot_normal"))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.1))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.2))
 
     model.add(Dense(2048, kernel_initializer="glorot_normal"))
     model.add(BatchNormalization())
     model.add(LeakyReLU(alpha=0.1))
-    model.add(Dropout(0.3))
+    model.add(Dropout(0.2))
 
     model.add(Dense(200, activation="softmax"))
 
