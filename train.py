@@ -32,7 +32,7 @@ def train(model_path, restore, epochs, model, optim, datagen, data, cb_list, bat
 
     history = model.fit_generator(datagen.flow(X_train, y_train, batch_size=batch_size), 
                                     steps_per_epoch=len(X_train) / batch_size, 
-                                    epochs=epochs, verbose=2, callbacks=cb_list, 
+                                    epochs=epochs, verbose=1, callbacks=cb_list, 
                                     validation_data=datagen.flow(X_val, y_val, batch_size=batch_size),
                                     validation_steps=len(X_val) / batch_size)
 
