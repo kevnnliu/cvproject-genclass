@@ -9,7 +9,11 @@ from keras.applications import resnet_v2
 # Residual network using the ResNet50 v2 architecture.
 def BravoNet(version=""):
     model = Sequential()
-    suffix = "" if version = "" else "_" + version
+    suffix = "" if version == "" else "_" + version
+#     if version = "":
+#         suffix = ""
+#     else:
+#         "_" + version
     model.name = "BravoNet" + suffix
 
     base_model = resnet_v2.ResNet50V2(weights=None, include_top=False, pooling="avg", input_shape=(64, 64, 3))
@@ -25,7 +29,7 @@ def BravoNet(version=""):
 # Simple convolutional network with minor improvements.
 def AlphaNet(version=""):
     model = Sequential()
-    suffix = "" if version = "" else "_" + version
+    suffix = "" if version == "" else "_" + version
     model.name = "AlphaNet" + suffix
 
     model.add(Conv2D(32, kernel_size=7, padding="same", kernel_initializer="glorot_normal", input_shape=(64, 64, 3)))
