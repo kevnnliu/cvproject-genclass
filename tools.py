@@ -31,6 +31,22 @@ def get_label_dict(img_folder=DEFAULT_IMAGE_FOLDER):
 
     return class_labels
 
+def get_box_dict_val(img_folder=DEFAULT_IMAGE_FOLDER):
+    image_folder = img_folder+"val/"
+    class_boxes = {}
+    print("Loading bounding boxes\n")
+    with open(image_folder + "val_annotations.txt", "r") as labels_file:
+        for line in labels_file:
+            label = line.strip().split()
+            img_name = label[0]
+            n_label = label[1]
+            box_coords = label[2:]
+            class_boxes[img_name] = box_coords
+    print("Done\n")
+
+    return class_boxes
+
+
 def load_data(dataset="train", img_folder=DEFAULT_IMAGE_FOLDER):
     print("Loading " + dataset + " data\n")
     image_folder = img_folder
