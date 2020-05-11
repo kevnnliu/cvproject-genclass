@@ -132,3 +132,5 @@ data/tiny-imagenet-200/
 models/CharlieNet/auto_model/
 
 *.pt
+
+runs/TinyImageNet/
