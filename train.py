@@ -1,6 +1,7 @@
 import tensorflow as tf
 from keras.models import load_model
 import models
+import random
 import numpy as np
 import keras.metrics
 
@@ -58,7 +59,7 @@ def show_history(history):
     history = history.history
 
     # Plot training & validation loss values
-    plot_history(history["loss"], history["val_loss"], "Loss")
+    plot_history(history["loss"], history["val_loss"], "Categorical Cross-Entropy Loss")
 
     # Plot training & validation top-1 accuracy values
     plot_history(history["accuracy"], history["val_accuracy"],
@@ -84,6 +85,9 @@ def plot_history(train, val, metric):
 
 
 def shuffle_channels(img):
+    rand = random.randint(1, 10)
+    if rand <= 8:
+        return img
     img = np.moveaxis(img, -1, 0)
     np.random.shuffle(img)
     return np.moveaxis(img, 0, -1)

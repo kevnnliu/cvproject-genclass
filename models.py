@@ -5,68 +5,67 @@ import time
 from keras.models import Model, Sequential
 from keras.layers import (Dense, Conv2D, MaxPooling2D, GlobalAveragePooling2D,
                           Flatten, LeakyReLU, SpatialDropout2D, Dropout,
-                          BatchNormalization, Lambda)
+                          BatchNormalization, Lambda, concatenate)
 from keras.applications import (mobilenet_v2, densenet, vgg16)
 
-from classification_models.resnet import ResNet18
+from classification_models.resnet import ResNet18, ResNet34
 
 
-# HotelNet:
-# Densely connected convolutional network using the DenseNet121 architecture.
-def HotelNet(input_shape, version="", weights=None):
-    model = Sequential()
-    model.name = append_version("HotelNet", version)
+# AlphaBravo:
+# Integrated stacking ensemble using the models below.
+def AlphaBravo(members, version=""):
+    for i in range(len(members)):
+        model = members[i]
+        for layer in model.layers:
+            layer.trainable = False
+            layer.name = "ensemble_" + str(i + 1) + "_" + layer.name
 
-    base_model = densenet.DenseNet121(include_top=True,
-                                      weights=weights,
-                                      pooling="avg",
-                                      classes=200,
-                                      input_shape=input_shape)
+    ensemble_inputs = [model.input for model in members]
+    ensemble_outputs = [model.output for model in members]
 
-    base_model.summary()
+    merge = concatenate(ensemble_outputs)
 
-    model.add(base_model)
+    hidden_1 = Dense(1024, kernel_initializer="glorot_normal")(merge)
+    bn_1 = BatchNormalization()(hidden_1)
+    relu_1 = LeakyReLU(alpha=0.1)(bn_1)
+    dp_1 = Dropout(0.2)(relu_1)
 
-    model.add(Dense(200, activation="softmax"))
+    hidden_2 = Dense(1024, kernel_initializer="glorot_normal")(dp_1)
+    bn_2 = BatchNormalization()(hidden_2)
+    relu_2 = LeakyReLU(alpha=0.1)(bn_2)
+    dp_2 = Dropout(0.2)(relu_2)
 
-    model.summary()
+    hidden_3 = Dense(1024, kernel_initializer="glorot_normal")(dp_2)
+    bn_3 = BatchNormalization()(hidden_3)
+    relu_3 = LeakyReLU(alpha=0.1)(bn_3)
+    dp_3 = Dropout(0.2)(relu_3)
 
-    return model
+    output = Dense(200, activation="softmax")(dp_3)
 
-
-# GolfNet:
-# Efficient convolutional network using the MobileNetV2 architecture.
-def GolfNet(input_shape, version="", weights=None):
-    model = Sequential()
-    model.name = append_version("GolfNet", version)
-
-    base_model = mobilenet_v2.MobileNetV2(include_top=True,
-                                          weights=weights,
-                                          pooling="avg",
-                                          classes=200,
-                                          input_shape=input_shape)
-
-    base_model.summary()
-
-    model.add(base_model)
-
-    model.add(Dense(200, activation="softmax"))
-
-    model.summary()
+    model = Model(inputs=ensemble_inputs, outputs=output)
+    model.name = append_version("AlphaBravo", version)
 
     return model
 
 
 # BravoNet:
-# Residual network using the ResNet18 architecture.
-def BravoNet(input_shape, version="", weights=None):
+# Residual network using the ResNet18/ResNet34 architecture.
+def BravoNet(input_shape, version="", weights=None, net34=False):
     model = Sequential()
     model.name = append_version("BravoNet", version)
 
     base_model = ResNet18(weights=weights,
-                          include_top=True,
+                          include_top=False,
                           classes=200,
                           input_shape=input_shape)
+
+    if net34:
+        base_model = ResNet34(weights=weights,
+                              include_top=False,
+                              classes=200,
+                              input_shape=input_shape)
+
+    base_model.summary()
 
     model.add(base_model)
     model.add(GlobalAveragePooling2D())
