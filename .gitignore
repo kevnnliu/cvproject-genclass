@@ -130,3 +130,7 @@ data/tiny-imagenet-200/
 *.h5
 
 models/CharlieNet/auto_model/
+
+*.pt
+
+runs/TinyImageNet/
