@@ -1,3 +1,4 @@
 {
-    "python.pythonPath": "C:\\Users\\crazy\\AppData\\Local\\Programs\\Python\\Python37\\python.exe"
+    "python.pythonPath": "C:\\Users\\crazy\\miniconda3\\envs\\keras\\python.exe",
+    "python.formatting.provider": "yapf"
 }
