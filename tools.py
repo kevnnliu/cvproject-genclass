@@ -118,7 +118,7 @@ def prepare_data(img_folder=DEFAULT_IMAGE_FOLDER):
 
     print("Formatting training images\n")
     for image in train_images:
-        cv_image = cv2.imread(image, cv2.IMREAD_COLOR)
+        cv_image = read_resize(image)
         X_train.append(cv_image)
         label = image[29 : 38]
         encoding = class_labels[label]
@@ -135,7 +135,7 @@ def prepare_data(img_folder=DEFAULT_IMAGE_FOLDER):
 
     print("Formatting validation images\n")
     for image in val_images:
-        cv_image = cv2.imread(image, cv2.IMREAD_COLOR)
+        cv_image = read_resize(image)
         X_val.append(cv_image)
         actual_image = image[34 :]
         label = val_labels[actual_image]
@@ -145,7 +145,7 @@ def prepare_data(img_folder=DEFAULT_IMAGE_FOLDER):
 
     print("Formatting test images\n")
     for image in test_images:
-        cv_image = cv2.imread(image, cv2.IMREAD_COLOR)
+        cv_image = read_resize(image)
         X_test.append(cv_image)
     print("Done\n")
 
@@ -171,3 +171,8 @@ def prepare_data(img_folder=DEFAULT_IMAGE_FOLDER):
     print("Done\n")
 
     print("Finished preparing data\n")
+
+def read_resize(img, factor=1):
+    cv_image = cv2.imread(img, cv2.IMREAD_COLOR)
+    dim = (int)(64 * factor)
+    return cv2.resize(cv_image, (dim, dim), interpolation=cv2.INTER_LANCZOS4) / 255.

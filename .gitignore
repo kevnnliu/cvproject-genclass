@@ -128,3 +128,5 @@ data/tiny-imagenet-200/
 *.zip
 
 *.h5
+
+models/CharlieNet/auto_model/

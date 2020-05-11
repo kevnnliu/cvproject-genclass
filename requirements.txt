@@ -1,7 +1,11 @@
-tensorflow==2.2.0
+tensorflow==2.1.0
 keras==2.3.1
+autokeras==1.0.2
 numpy==1.18.3
 opencv-python==4.2.0.34
 matplotlib==3.2.1
+Pillow==7.1.2
+image-classifiers==0.2.2
+keras_tqdm
 sklearn
 jupyter
