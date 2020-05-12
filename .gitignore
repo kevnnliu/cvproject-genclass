@@ -133,4 +133,4 @@ models/CharlieNet/auto_model/
 
 *.pt
 
-runs/TinyImageNet/
+runs/
