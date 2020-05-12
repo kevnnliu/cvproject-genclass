@@ -21,7 +21,7 @@ top5_acc.__name__ = "top5_accuracy"
 
 
 def train(model_path, restore, epochs, model, optim, datagen, testgen, data,
-          cb_list, batch_size):
+          cb_list, batch_size, verbosity=2):
     X_train, y_train = data["train"]
     X_val, y_val = data["val"]
 
@@ -44,7 +44,7 @@ def train(model_path, restore, epochs, model, optim, datagen, testgen, data,
                                                batch_size=batch_size),
                                   steps_per_epoch=len(X_train) / batch_size,
                                   epochs=epochs,
-                                  verbose=2,
+                                  verbose=verbosity,
                                   callbacks=cb_list,
                                   validation_data=testgen.flow(
                                       X_val, y_val, batch_size=batch_size),
