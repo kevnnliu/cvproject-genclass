@@ -39,7 +39,7 @@ def get_box_dict_val(img_folder=DEFAULT_IMAGE_FOLDER):
         for line in labels_file:
             label = line.strip().split()
             img_name = label[0]
-            n_label = label[1]
+            _ = label[1]
             box_coords = label[2:]
             class_boxes[img_name] = box_coords
     print("Done\n")
@@ -70,15 +70,7 @@ def load_data(dataset="train", img_folder=DEFAULT_IMAGE_FOLDER):
 def prepare_data(img_folder=DEFAULT_IMAGE_FOLDER):
     print("Preparing data\n")
     image_folder = img_folder
-    class_labels = {}
-    index = 0
-    print("Loading labels\n")
-    with open(image_folder + "wnids.txt", "r") as labels_file:
-        for line in labels_file:
-            label = line.strip()
-            class_labels[label] = index
-            index += 1
-    print("Done\n")
+    class_labels = get_label_dict()
 
     train_folder = image_folder + "train/"
     val_folder = image_folder + "val/"
@@ -172,7 +164,7 @@ def prepare_data(img_folder=DEFAULT_IMAGE_FOLDER):
 
     print("Finished preparing data\n")
 
-def read_resize(img, factor=1):
-    cv_image = cv2.imread(img, cv2.IMREAD_COLOR)
+def read_resize(img_path, factor=1):
+    cv_image = cv2.imread(img_path, cv2.IMREAD_COLOR)
     dim = (int)(64 * factor)
     return cv2.resize(cv_image, (dim, dim), interpolation=cv2.INTER_LANCZOS4) / 255.
