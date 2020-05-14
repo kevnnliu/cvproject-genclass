@@ -4,7 +4,6 @@ jupyter
 # Keras
 tensorflow==2.1.0
 keras==2.3.1
-keras-tuner==1.0.1
 numpy==1.18.3
 opencv-python==4.2.0.34
 matplotlib==3.2.1

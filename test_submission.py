@@ -1,9 +1,8 @@
 import sys
 import pathlib
-from PIL import Image
 from keras.models import load_model
 import numpy as np
-from models import AlphaBravo
+from models import AlphaStack
 from tools import get_label_dict, read_resize
 from train import top3_acc, top5_acc
 
@@ -14,8 +13,8 @@ def main():
 
     # Load the model
     custom_metrics = {"top3_accuracy": top3_acc, "top5_accuracy": top5_acc}
-    model_path = "models/AlphaBravo/AlphaBravo.h5"
-    ab_ensemble = load_model(model_path, custom_objects=custom_metrics)
+    model_path = "models/AlphaStack/AlphaStack.h5"
+    ensemble = load_model(model_path, custom_objects=custom_metrics)
 
     # Open the evaluation CSV file for writing
     with open("eval_classified.csv", "w") as eval_output_file:
@@ -32,10 +31,8 @@ def main():
             img = read_resize(image_path)
 
             # Generate a prediction
-            output = ab_ensemble.predict(np.expand_dims(img, 0))
+            output = ensemble.predict(np.expand_dims(img, 0))
             prediction = int(np.argmax(output.reshape(-1)))
-
-            print(output, prediction)
 
             # Write the prediction to the output file
             eval_output_file.write('{},{}\n'.format(image_id,
