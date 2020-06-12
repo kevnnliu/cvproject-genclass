@@ -21,3 +21,7 @@ To view saliency maps for your model, simply use `Saliency.ipynb` and load your 
 ## Data augmentation:
 
 To see the results of applying different data augmentations, use `Augmentation.ipynb` and change the arguments of the `ImageDataGenerator` object as desired.
+
+## Testing
+
+`test_submission.py` takes the path to a CSV file as a command line argument. Each line in the CSV file should be in the format `image_id (int), image_path (str), image_height (int), image_width (int), image_channels (int)`. This will create a file called `eval_classified.csv` where each line is in the format `image_id (int), image_class (str)`.
