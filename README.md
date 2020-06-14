@@ -1,4 +1,4 @@
-## CS 182 Vision Project - Generalizable Classifiers
+## CS 182: Deep Neural Networks, Vision Project - Generalizable Classifiers
 
 UC Berkeley, Spring 2020. The goal is to design and train a classifier on top of the Tiny ImageNet dataset, a classification dataset with 200 classes, each with 500 training images (100,000 images) that are 64x64 RGB images. The validation set has 50 images per class (10,000 images).
 
