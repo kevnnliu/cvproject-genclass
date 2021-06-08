@@ -7,7 +7,7 @@ keras==2.3.1
 numpy==1.18.3
 opencv-python==4.2.0.34
 matplotlib==3.2.1
-Pillow==7.1.2
+Pillow==8.2.0
 image-classifiers==0.2.2
 h5py==2.10.0
 
