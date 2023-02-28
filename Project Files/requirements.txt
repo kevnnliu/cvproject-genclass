@@ -12,6 +12,6 @@ image-classifiers==0.2.2
 h5py==2.10.0
 
 # PyTorch
-torch==1.5.0+cu101;
+torch==1.13.1;
 torchvision==0.6.0+cu101;
 tensorboardX==2.0
